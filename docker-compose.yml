@@ -1,0 +1,76 @@
+version: '3.9'
+
+volumes:
+  php-fpm-socket:
+  db-store:
+
+services:
+  web:
+    container_name: focus-web
+    build: 
+      context: .
+      dockerfile: ./infra/docker/nginx/Dockerfile
+      args:
+        - USER_ID=${USER_ID}
+        - USER_NAME=${USER_NAME}
+        - GROUP_ID=${GROUP_ID}
+        - GROUP_NAME=${GROUP_NAME}
+    ports:
+      - target: 8080
+        published: ${WEB_PORT}
+        protocol: tcp
+        mode: host
+    volumes:
+      - type: volume
+        source: php-fpm-socket
+        target: /var/run/php-fpm
+      - type: bind
+        source: ./src
+        target: /var/www/src
+
+  app:
+    container_name: focus-app
+    build:
+      context: .
+      dockerfile: ./infra/docker/php/Dockerfile
+      args:
+        - USER_ID=${USER_ID}
+        - USER_NAME=${USER_NAME}
+        - GROUP_ID=${GROUP_ID}
+        - GROUP_NAME=${GROUP_NAME}
+    volumes:
+      - type: volume
+        source: php-fpm-socket
+        target: /var/run/php-fpm
+      - type: bind
+        source: ./src
+        target: /var/www/src
+    environment:
+      - DB_CONNECTION=mysql
+      - DB_HOST=db
+      - DB_PORT=3306
+      - DB_DATABASE=${DB_NAME:-focus}
+      - DB_USERNAME=${DB_USER:-phper}
+      - DB_PASSWORD=${DB_PASS:-secret}
+    depends_on:
+      - web
+
+  db:
+    container_name: focus-db
+    build:
+      context: .
+      dockerfile: ./infra/docker/mysql/Dockerfile
+    ports:
+      - target: 3306
+        published: ${DB_PORT:-3306}
+        protocol: tcp
+        mode: host
+    volumes:
+      - type: volume
+        source: db-store
+        target: /var/lib/mysql
+    environment:
+      - MYSQL_DATABASE=${DB_NAME:-focus}
+      - MYSQL_USER=${DB_USER:-phper}
+      - MYSQL_PASSWORD=${DB_PASS:-secret}
+      - MYSQL_ROOT_PASSWORD=${DB_PASS:-secret}

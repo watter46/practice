@@ -8,12 +8,23 @@
 
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         @livewireStyles
+
+        <style>
+            body {
+                margin: 0;
+                padding: 0;
+                width: 100vw;
+                height: 100vh;
+                /* background: linear-gradient(to bottom right, #223C69, #0F1827);  */
+            }
+        </style>
     </head>
     <body class="h-screen">
-        <livewire:header />
+
+        <livewire:css />
+        {{-- <livewire:header />
         <livewire:navigation />
-        <livewire:tasks />
-        {{-- <livewire:css /> --}}
+        <livewire:tasks /> --}}
 
         @livewireScripts
     </body>

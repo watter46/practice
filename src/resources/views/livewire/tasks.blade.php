@@ -1,9 +1,9 @@
 <div class="mt-6 px-12">
     <div class="flex">
-        <div class="p-4 w-9/12 h-96 flex items-center bg-gray-800">
+        <div class="p-4 m-3 w-9/12 border-2 rounded-lg border-gray-800">
             <form class="w-full">
                 {{-- Title Input --}}
-                <div class="mb-2 bg-gray-800">
+                <div class="mb-2">
                     <div class="relative">
                         <input type="text" id="title_input" class="block px-2.5 pb-1.5 pt-4 w-full text-sm text-gray-900 bg-gray-50 dark:bg-gray-800 border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
                         <label for="small_filled" class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-3 scale-75 top-3 z-10 origin-[0] left-2.5 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-3">Title
@@ -35,14 +35,14 @@
                             </div>
                         </div>
                     </div>
-
-                    {{-- Textarea --}}
-                    <div class="py-2 px-4 bg-white rounded-b-lg dark:bg-gray-800">
-                        <label for="editor" class="sr-only">Publish post</label>
-                        <textarea id="editor_textarea" rows="8" class="block px-0 w-full text-sm text-gray-800 bg-white focus:outline-none border-0 dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400" placeholder="Write an article..." required=""></textarea>
-                    </div>
                 </div>
 
+                {{-- Textarea --}}
+                <div class="py-2 px-4 rounded-b-lg dark:bg-gray-800">
+                    <label for="editor" class="sr-only">Publish post</label>
+                    <textarea id="editor_textarea" rows="8" class="block px-0 w-full text-sm text-gray-800 bg-white focus:outline-none border-0 dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400" placeholder="Write an article..." required=""></textarea>
+                </div>
+                
                 {{-- Post Button --}}
                 <div class="flex justify-end">
                     <button type="submit"
@@ -55,8 +55,8 @@
         </div>
 
         {{-- Edit Options --}}
-        <div class="pr-2 py-2 w-3/12 h-96 flex items-center bg-gray-800">
-            <div class="bg-gray-800 w-full h-5/6">
+        <div class="pr-2 py-2 w-3/12 h-96 flex items-center">
+            <div class="w-full h-5/6">
                 <div class="p-2 border-b-2 border-gray-500">
                     <div class="mb-2 grid grid-cols-12 gap-4 flex items-center">
                         <label class="col-start-1 col-end-2 font-black text-white">Tag</label>

@@ -16,3 +16,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('main');
 });
+
+Route::get('/timer', \App\Http\Livewire\Timer::class)->name('timer');
+Route::get('/tasks', \App\Http\Livewire\Tasks::class)->name('tasks');

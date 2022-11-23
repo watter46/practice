@@ -13,9 +13,9 @@
             body {
                 margin: 0;
                 padding: 0;
-                width: 100vw;
-                height: 100vh;
-                /* background: linear-gradient(to bottom right, #223C69, #0F1827);  */
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(to bottom right, #223C69, #0F1827); 
             }
         </style>
     </head>

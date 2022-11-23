@@ -11,13 +11,18 @@ class Navigation extends Component
         return view('livewire.navigation');
     }
 
+    public function toTask()
+    {
+        return redirect()->route('tasks');
+    }
+
     public function toTimer()
     {
         return redirect()->route('timer');
     }
 
-    public function toTask()
+    public function toSetting()
     {
-        return redirect()->route('tasks');
+        return redirect()->route('setting');
     }
 }

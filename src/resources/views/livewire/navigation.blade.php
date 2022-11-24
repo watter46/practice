@@ -1,4 +1,4 @@
-<div class="">
+<div class="w-full">
     <div class="p-5 mb-3 h-10 text-xl font-black text-gray-300 flex justify-start items-center">
         watter46 / focus
     </div>

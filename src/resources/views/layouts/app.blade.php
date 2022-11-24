@@ -12,8 +12,8 @@
         body {
             margin: 0;
             padding: 0;
-            width: 100%;
-            height: 100%;
+            min-width: 100vh;
+            min-height: 100vh;
             background: linear-gradient(to bottom right, #223C69, #0F1827); 
         }
     </style>
@@ -23,6 +23,7 @@
 <body>
     <livewire:header />
     <livewire:navigation />
+    
     {{ $slot }}
 
     @livewireScripts

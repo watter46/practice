@@ -10,4 +10,9 @@ class Header extends Component
     {
         return view('livewire.header');
     }
+
+    public function toProfile()
+    {
+        return redirect()->route('profile');
+    }
 }

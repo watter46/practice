@@ -1,6 +1,6 @@
-<div class="">
+<div class="p-2">
     {{-- タイマー --}}
-    <div class="text-gray-300 w-screen flex justify-center">
+    <div class="text-gray-300 w-full flex justify-center">
         <div class="timer-container">
             <div class="timer">
                 <div class="timer-box flex justify-center">
@@ -54,7 +54,7 @@
                 <option value="">Task4</option>
             </select>
 
-            <div class="selected-Task mr-5 rounded-lg h-96 flex justify-center items-center bg-gray-700">
+            <div class="selected-Task rounded-lg h-96 flex justify-center items-center bg-gray-700">
                 <div class="">
                     <label class="mb-5 text-xl text-white flex justify-center">Drag Task</label>
                     <svg width="150" height="150" fill="white" viewBox="0 0 1000 1000" enable-background="new 0 0 1000 1000" xml:space="preserve">

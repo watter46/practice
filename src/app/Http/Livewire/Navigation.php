@@ -21,6 +21,11 @@ class Navigation extends Component
         return redirect()->route('timer');
     }
 
+    public function toProjects()
+    {
+        return redirect()->route('projects');
+    }
+    
     public function toSetting()
     {
         return redirect()->route('setting');

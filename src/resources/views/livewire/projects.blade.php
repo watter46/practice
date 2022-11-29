@@ -12,11 +12,11 @@
         </div>
     </div>
 
-    <div class="mt-4 border-2 rounded-lg border-gray-600 bg-gray-700">
+    <form name="form" class="mt-4 border-2 rounded-lg border-gray-600 bg-gray-700">
         {{-- toolbar header --}}
         <div class="p-3 flex items-center border-b-2 border-gray-600 bg-gray-800">
-            <input type="checkbox" class="mr-4 border border-gray-300 form-select">
-            <label class="w-full text-gray-400">0 Select</label>
+            <input type="checkbox" id="header-checkbox" class="mr-4 border border-gray-300" onchange="is_all_checked()">
+            <label id="form-checked-count" class="w-full text-gray-400"></label>
 
             <div class="px-2 flex justify-end items-center">
                 <div class="hover-tool flex justify-center items-center">
@@ -37,31 +37,15 @@
             </div>
         </div>
 
-        <div class="hover-project p-3 border-b-2 border-gray-600 hover:bg-gray-800">
-            <input type="checkbox" class="mr-4 border border-gray-300">
-            <label class="hover-project w-full text-gray-400" wire:click="projectDetail(1)">Project 1</label>
-        </div>
-
-        <div class="hover-project p-3 border-b-2 border-gray-600 hover:bg-gray-800">
-            <input type="checkbox" class="mr-4 border border-gray-300">
-            <label class="w-full text-gray-400" wire:click="projectDetail(2)">Project 2</label>
-        </div>
-
-        <div class="hover-project p-3 border-b-2 border-gray-600 hover:bg-gray-800">
-            <input type="checkbox" class="mr-4 border border-gray-300">
-            <label class="w-full text-gray-400" wire:click="projectDetail(3)">Project 3</label>
-        </div>
-
-        <div class="hover-project p-3 border-b-2 border-gray-600 hover:bg-gray-800">
-            <input type="checkbox" class="mr-4 border border-gray-300">
-            <label class="w-full text-gray-400" wire:click="projectDetail(4)">Project 4</label>
-        </div>
-        
-        <div class="hover-project p-3 border-b-2 border-gray-600 hover:bg-gray-800">
-            <input type="checkbox" class="mr-4 border border-gray-300">
-            <label class="w-full text-gray-400" wire:click="projectDetail(5)">Project 5</label>
-        </div>
-    </div>
+        @foreach ($projects as $project)
+            <div class="hover-project p-3 border-b-2 border-gray-600 hover:bg-gray-800">
+                <input type="checkbox" name="project" class="mr-4 border border-gray-300" onchange="rewriting()">
+                <label class="hover-project w-full text-gray-400"
+                       wire:click="projectDetail({{ $project['id'] }})">{{ $project['project'] }}
+                </label>
+            </div>
+        @endforeach
+    </form>
 
     <style>
         .hover-tool:hover label {
@@ -76,4 +60,20 @@
             border-bottom: 2px solid rgb(75 85 99);
         }
     </style>
+
+    <script>
+        const node_projects      = document.form.project;
+        const form_checked_count = document.getElementById('form-checked-count');
+
+        const checked_count    = () => [...node_projects].filter(node => node.checked === true).length;
+        const rewriting        = () => form_checked_count.innerText = checked_count() + " select";
+        const is_all_checked   = () => {
+            const is_checked = document.getElementById('header-checkbox').checked;
+
+            if (is_checked)  [...node_projects].forEach(node => node.checked = true);
+            if (!is_checked) [...node_projects].forEach(node => node.checked = false);
+            rewriting();
+        };
+        rewriting();
+    </script>
 </div>

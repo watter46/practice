@@ -15,4 +15,9 @@ class Projects extends Component
     {
         return redirect()->route('new-project');
     }
+
+    public function projectDetail($id)
+    {
+        return redirect()->route('tasks', ['id' => $id]);
+    }
 }

@@ -12,40 +12,48 @@
         </div>
     </div>
 
-    <form name="form" class="mt-4 border-2 rounded-lg border-gray-600 bg-gray-700">
-        {{-- toolbar header --}}
-        <div class="p-3 flex items-center border-b-2 border-gray-600 bg-gray-800">
-            <input type="checkbox" id="header-checkbox" class="mr-4 border border-gray-300" onchange="is_all_checked()">
-            <label id="form-checked-count" class="w-full text-gray-400"></label>
+    @if ($projects)
+        <form name="form" class="mt-4 border-2 rounded-lg border-gray-600 bg-gray-700">
+            {{-- toolbar header --}}
+            <div class="p-3 flex items-center border-b-2 border-gray-600 bg-gray-800">
+                <input type="checkbox"
+                       id="header-checkbox"
+                       class="mr-4 border border-gray-300"
+                       onchange="is_all_checked()">
+                <label id="form-checked-count" class="w-full text-gray-400"></label>
 
-            <div class="px-2 flex justify-end items-center">
-                <div class="hover-tool flex justify-center items-center">
-                    <label class="text-lg text-gray-400">Labels</label>
-                    <svg class="w-5 h-5 pt-1 fill-gray-400" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-                    </svg>
+                <div class="px-2 flex justify-end items-center">
+                    <div class="hover-tool flex justify-center items-center">
+                        <label class="text-lg text-gray-400">Labels</label>
+                        <svg class="w-5 h-5 pt-1 fill-gray-400" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                        </svg>
+                    </div>
+                </div>
+
+                <div class="px-2 flex justify-end items-center">
+                    <div class="hover-tool flex justify-center items-center">
+                        <label class="text-lg text-gray-400">sort</label>
+                        <svg class="w-5 h-5 pt-1 fill-gray-400" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                        </svg>
+                    </div>
                 </div>
             </div>
 
-            <div class="px-2 flex justify-end items-center">
-                <div class="hover-tool flex justify-center items-center">
-                    <label class="text-lg text-gray-400">sort</label>
-                    <svg class="w-5 h-5 pt-1 fill-gray-400" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-                    </svg>
+            @foreach ($projects as $project)
+                <div class="hover-project p-3 border-b-2 border-gray-600 hover:bg-gray-800">
+                    <input type="checkbox"
+                           name="project"
+                           class="mr-4 border border-gray-300"
+                           onchange="rewriting()">
+                    <label class="hover-project w-full text-gray-400"
+                        wire:click="projectDetail({{ $project['id'] }})">{{ $project['project'] }}
+                    </label>
                 </div>
-            </div>
-        </div>
-
-        @foreach ($projects as $project)
-            <div class="hover-project p-3 border-b-2 border-gray-600 hover:bg-gray-800">
-                <input type="checkbox" name="project" class="mr-4 border border-gray-300" onchange="rewriting()">
-                <label class="hover-project w-full text-gray-400"
-                       wire:click="projectDetail({{ $project['id'] }})">{{ $project['project'] }}
-                </label>
-            </div>
-        @endforeach
-    </form>
+            @endforeach
+        </form>
+    @endif
 
     <style>
         .hover-tool:hover label {

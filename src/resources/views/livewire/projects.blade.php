@@ -39,17 +39,27 @@
 
         <div class="hover-project p-3 border-b-2 border-gray-600 hover:bg-gray-800">
             <input type="checkbox" class="mr-4 border border-gray-300">
-            <label class="hover-project w-full text-gray-400">Project 1</label>
+            <label class="hover-project w-full text-gray-400" wire:click="projectDetail(1)">Project 1</label>
         </div>
 
         <div class="hover-project p-3 border-b-2 border-gray-600 hover:bg-gray-800">
             <input type="checkbox" class="mr-4 border border-gray-300">
-            <label class="w-full text-gray-400">Project 2</label>
+            <label class="w-full text-gray-400" wire:click="projectDetail(2)">Project 2</label>
         </div>
 
         <div class="hover-project p-3 border-b-2 border-gray-600 hover:bg-gray-800">
             <input type="checkbox" class="mr-4 border border-gray-300">
-            <label class="w-full text-gray-400">Project 3</label>
+            <label class="w-full text-gray-400" wire:click="projectDetail(3)">Project 3</label>
+        </div>
+
+        <div class="hover-project p-3 border-b-2 border-gray-600 hover:bg-gray-800">
+            <input type="checkbox" class="mr-4 border border-gray-300">
+            <label class="w-full text-gray-400" wire:click="projectDetail(4)">Project 4</label>
+        </div>
+        
+        <div class="hover-project p-3 border-b-2 border-gray-600 hover:bg-gray-800">
+            <input type="checkbox" class="mr-4 border border-gray-300">
+            <label class="w-full text-gray-400" wire:click="projectDetail(5)">Project 5</label>
         </div>
     </div>
 

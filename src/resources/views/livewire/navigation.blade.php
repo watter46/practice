@@ -1,5 +1,5 @@
 <div class="w-full">
-    <div class="h-8 py-5 text-sm font-semibold flex justify-start items-center bg-violet-600">
+    <div class="h-8 py-5 text-sm font-semibold flex justify-start items-center">
         {{-- Projects --}}
         <div class="hover-tab h-5 ml-5 mr-1 p-5 flex justify-center items-center"
              wire:click="toProjects">

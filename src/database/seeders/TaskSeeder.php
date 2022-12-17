@@ -18,7 +18,7 @@ class TaskSeeder extends Seeder
             \App\Models\Task::create([
                 'project_id' => rand(1, 10),
                 'task'       => 
-                "- [ ] Task{$i}を完了させる\n\n- [ ] Task{$i}を完了させる2\n- [ ] Task{$i}を完了させる3\n- [ ] Task{$i}を完了させる4\n\n- [ ] Task{$i}を完了させる5"
+                "- [ ] Task{$i}を完了させる\n- [|] Task{$i}を完了させる2\naaaaaaaa\n- [ ] Task{$i}を完了させる3\n- [ ] Task{$i}を完了させる4\nbbbbbbb\n\n- [ ] Task{$i}を完了させる5"
             ]);
         }
     }

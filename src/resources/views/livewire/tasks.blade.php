@@ -1,10 +1,9 @@
 <div class="mt-6 px-12">
-    @foreach ($task as $v)
     {{-- Project Title --}}
     <div class="flex justify-center">
         <div class="py-5 px-14 w-full">
             <div class="flex">
-                <label class="w-full text-4xl text-white">{{ $v['title'] }}</label>
+                <label class="w-full text-4xl text-white">{{ $project['project'] }}</label>
 
                 <div class="flex justify-end items-center">
                     <button type="button"
@@ -28,17 +27,62 @@
     {{-- main --}}
     <div class="flex justify-center">
         <div class="py-5 pr-5 w-8/12">
-            <div class="mt-4 border-2 rounded-lg border-gray-600">
-                <div class="hover-project p-3 border-b-2 border-gray-600 hover:bg-gray-800">
-                    <label class="hover-project w-full text-gray-400">{{ $v['id'] }}: {{ $v['task'] }}</label>
-                </div>
-            </div>
+            <task-list>
+                @foreach ($project['tasks'] as $tasks)
+                    <div class="mt-4 border-2 rounded-lg border-gray-600">
+                        <div class="hover-project p-3 border-b-2 border-gray-600 hover:bg-gray-800">
+                            <div id="tasks">
+                                <table class="table-auto text-white">
+                                    <tbody>
+                                        <tr>
+                                            <td id="taskList"
+                                                project_id="{{ $project['id']}}"
+                                                task_id="{{ $tasks['id'] }}">
+                                                @foreach ($tasks['task'] as $task)
+                                                    @foreach ($task as $tag => $content)
+                                                        @if($tag === 'ul')
+                                                            <ul id="sortable" wire:ignore>
+                                                                @foreach ($content as $text)
+                                                                    <li class="flex items-center" id="sortable-item">
+                                                                        <span class="py-2 px-3 handle">:::</span>
+                                                                        @if (str_starts_with($text, '- [ ]'))
+                                                                            <input type="checkbox" class="mr-2">
+                                                                            <p>{{ ltrim($text, '- [ ] ') }}</p>
+                                                                        @endif
+                                                                        
+                                                                        @if (str_starts_with($text, '- [|]'))
+                                                                            <input type="checkbox" class="mr-2" checked>
+                                                                            <p>{{ ltrim($text, '- [|] ') }}</p>
+                                                                        @endif
+                                                                    </li>
+                                                                @endforeach
+                                                            </ul>
+                                                        @endif
+
+                                                        @if($tag === "p")
+                                                            <p class="text-white">{{ $content }}</p>
+                                                        @endif
+
+                                                        @if($tag === "br")
+                                                            <br>
+                                                        @endif
+                                                    @endforeach
+                                                @endforeach
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </task-list>
 
             <div class="w-full mt-3 border-b-2 border-gray-400"></div>
     
             {{-- TextEditor --}}
             <div class="mt-3">
-                <form class="w-full">
+                <form class="w-full" wire:submit.prevent="addPost">
                     {{-- Editor Command --}}
                     <div class="w-full rounded-t-lg border border-gray-600 dark:bg-gray-700">
                         <div class="flex justify-end items-center px-3 border-b dark:border-gray-600">
@@ -74,8 +118,7 @@
                     {{-- Post Button --}}
                     <div class="mt-2 flex justify-end">
                         <button type="submit"
-                                class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-lime-600 rounded-lg focus:ring-4 dark:focus:ring-lime-500 hover:bg-lime-500"
-                                onclick="todo.onPost()">
+                                class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-lime-600 rounded-lg focus:ring-4 dark:focus:ring-lime-500 hover:bg-lime-500">
                             Publish post
                         </button>
                     </div>
@@ -99,7 +142,6 @@
             </div>
         </div>
     </div>
-    @endforeach
 
     <style>
         .hover-tool:hover label {

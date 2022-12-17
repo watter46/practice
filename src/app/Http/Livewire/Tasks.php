@@ -4,32 +4,59 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 
+use App\Models\Project;
+use App\Models\Task;
+use App\UseCases\TasksUseCase;
 
 class Tasks extends Component
 {
-    public int $task_id;
+    private $project;
 
-    public $task;
-
-    private $tasks = [
-        ['id' => 1,'title' => 'Title1', 'task' => 'Task1'],
-        ['id' => 2,'title' => 'Title2', 'task' => 'Task2'],
-        ['id' => 3,'title' => 'Title3', 'task' => 'Task3'],
-        ['id' => 4,'title' => 'Title4', 'task' => 'Task4'],
-        ['id' => 5,'title' => 'Title5', 'task' => 'Task5']
+    protected $listeners = [
+        'updateTask' => 'updateTask',
     ];
 
     public function render()
     {
-        return view('livewire.tasks');
+        return view('livewire.tasks', [
+            'project' => $this->project
+        ]);
     }
 
-    // Todo: idからDBの値を取得する
     public function mount($id)
     {
-        $this->task = array_filter($this->tasks, fn($val) => $val['id'] === (int) $id);
+        $this->fetchProject($id);
+    }
 
-        $this->render();
+    private function fetchProject($id)
+    {
+        $project = Project::with('tasks')->find($id);
+
+        $tasks = $this->splitTask($project);
+
+        $this->project = collect($project)->replace(['tasks' => $tasks]);
+    }
+
+    private function splitTask($project)
+    {
+        $usecase = new TasksUseCase();
+        $task = collect($project['tasks'])->map(function ($items) use ($usecase) {
+            
+            /* 改行で分割する */
+            $texts = preg_split("/\r\n|\n/", $items['task']);
+            $items['task'] = $usecase->convertToTag($texts);
+
+            return $items;
+        });
+
+        return $task;
+    }
+
+    public function updateTask($modified_task, $project_id, $task_id)
+    {
+        Task::find($task_id)->update(['task' => $modified_task]);
+
+        $this->fetchProject($project_id);
     }
 
     public function toNewProject()

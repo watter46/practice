@@ -1,16 +1,28 @@
-<div class="flex justify-center p-3">
-    <label class="text-white text-lg px-3 a">aaaa</label>
-    <label class="text-white text-lg px-3 a">bbbb</label>
-    <label class="text-white text-lg px-3 a">cccc</label>
+<div class="p-3">
+    <div class="flex justify-center mt-3">
+        <div id="list2" class="text-white">
+            <table>
+                <tr>
+                    <td id="taskList">
+                        <p class="text-white">タスク1</p>
+                        <p class="text-white">タスク2</p>
+                        <p class="text-white">タスク3</p>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <button type="button" class="ml-3 bg-white" onclick="change2()">btn</button>
+    </div>
+    
 
-<style>
-    /* .a {
-        text-decoration: none;
-    } */
-
-    .a:hover {
-        padding-bottom: 15px;
-        border-bottom: 2px solid orange;
-    }
-</style>
+    <script>
+        // replaceWith()試す
+        const change2 = () => {
+            const el = document.getElementById('taskList');
+            const ul = el.querySelelctorAll('#sortable');
+            // const childUl = el.lastChild;
+            // console.log(childUl)
+            console.log(ul)
+        }
+    </script>
 </div>

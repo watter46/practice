@@ -7,16 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 
 use App\Models\Task;
 
-class Project extends Model
+class Comment extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'project'
+        'comment'
     ];
 
     public function tasks()
     {
-        return $this->hasMany(Task::class);
+        return $this->belongsTo(Task::class);
     }
 }

@@ -46,12 +46,17 @@
                                                                     <li class="flex items-center" id="sortable-item">
                                                                         <span class="py-2 px-3 handle">:::</span>
                                                                         @if (str_starts_with($text, '- [ ]'))
-                                                                            <input type="checkbox" class="mr-2">
+                                                                            <input type="checkbox"
+                                                                                   class="mr-2"
+                                                                                   onchange="updateTasks(event)">
                                                                             <p>{{ ltrim($text, '- [ ] ') }}</p>
                                                                         @endif
                                                                         
                                                                         @if (str_starts_with($text, '- [|]'))
-                                                                            <input type="checkbox" class="mr-2" checked>
+                                                                            <input type="checkbox"
+                                                                                   class="mr-2"
+                                                                                   checked
+                                                                                   onchange="updateTasks(event)">
                                                                             <p>{{ ltrim($text, '- [|] ') }}</p>
                                                                         @endif
                                                                     </li>

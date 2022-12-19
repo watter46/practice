@@ -6,7 +6,10 @@ export default defineConfig({
         laravel({
             input: ['resources/css/app.css',
                     'resources/js/app.js',
-                    'resources/js/tasks-sortable.js',],
+                    'resources/js/functional/Tasks/tasks.js',
+                    // 'resources/js/tasks-event.js',
+                    // 'resources/js/tasks-sortable.js',
+                ],
             refresh: true,
         }),
     ],

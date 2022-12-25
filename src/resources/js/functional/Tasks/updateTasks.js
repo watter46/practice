@@ -11,17 +11,30 @@ export const UpdateTasks = (task_list_el, project_id, task_id) => {
 
             return [...li_els].map(li_el => {
                 const is_checked = li_el.getElementsByTagName('input')[0].checked;
-                const text       = li_el.getElementsByTagName('p')[0].innerText;
+                const p_els      = li_el.getElementsByTagName('p');
 
-                if (is_checked)
-                {
-                    return "- [|] " + text;
+                const texts        = [...p_els].map(p_el => p_el.innerText);
+                const command_text = texts[0];
+                const comment_text = texts[1];
+
+                const addCommandText = () => {
+                    if (is_checked)
+                    {
+                        return "- [|] " + command_text;
+                    }
+
+                    if (!is_checked)
+                    {
+                        return "- [ ] " + command_text;
+                    }
                 }
 
-                if (!is_checked)
+                if (comment_text === undefined)
                 {
-                    return "- [ ] " + text;
+                    return addCommandText();
                 }
+
+                return [addCommandText(),comment_text];
             });
         }
 
@@ -37,6 +50,6 @@ export const UpdateTasks = (task_list_el, project_id, task_id) => {
     });
 
     const modified_task = modified_texts.flat().join().replace(/,/g, '\n');
-
+    
     Livewire.emit('updateTask', modified_task, project_id, task_id);
 }

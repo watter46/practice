@@ -45,6 +45,8 @@ class Tasks extends Component
             /* 改行で分割する */
             $texts = preg_split("/\r\n|\n/", $items['task']);
             $items['task'] = $usecase->convertToTag($texts);
+            // $test = $usecase->convertToTag($texts);
+            // dd($test);
 
             return $items;
         });

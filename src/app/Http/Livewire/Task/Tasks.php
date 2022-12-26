@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Task;
 
 use Livewire\Component;
 
@@ -13,12 +13,15 @@ class Tasks extends Component
     private $project;
 
     protected $listeners = [
-        'updateTask' => 'updateTask',
+        'fetchProject' => 'fetchProject',
+        'updateTask'   => 'updateTask'
     ];
 
     public function render()
     {
-        return view('livewire.tasks', [
+        $this->dispatchBrowserEvent('inputTest');
+        
+        return view('livewire.task.tasks', [
             'project' => $this->project
         ]);
     }
@@ -28,7 +31,7 @@ class Tasks extends Component
         $this->fetchProject($id);
     }
 
-    private function fetchProject($id)
+    public function fetchProject($id)
     {
         $project = Project::with('tasks')->find($id);
 

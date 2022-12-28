@@ -60,18 +60,4 @@
             </div>
         </div>
     </div>
-
-    <style>
-        /* .hover-tool:hover label {
-            cursor: pointer;
-            color: rgb(229 231 235);
-        }
-        .hover-tool:hover svg {
-            fill: rgb(229 231 235);
-        }
-        .hover-project:hover label {
-            padding: 0 5px;
-            border-bottom: 2px solid rgb(75 85 99);
-        } */
-    </style>
 </div>

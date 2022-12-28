@@ -5,10 +5,10 @@ export default defineConfig({
     plugins: [
         laravel({
             input: ['resources/css/app.css',
+                    'resources/css/Header/header.css',
                     'resources/js/app.js',
                     'resources/js/functional/Tasks/tasks.js',
-                    // 'resources/js/tasks-event.js',
-                    // 'resources/js/tasks-sortable.js',
+                    'resources/js/functional/Header/header.js',
                 ],
             refresh: true,
         }),

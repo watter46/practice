@@ -1,7 +1,29 @@
-<div class="mt-4 border-2 rounded-lg border-gray-600">
+<div class="operate mt-4 border-2 rounded-lg border-gray-600" :wire:key="{{ $tasks['id'] }}">
+    {{-- task bar --}}
     <div class="py-0.5 pr-3 rounded-t-lg w-full flex justify-end bg-gray-800">
-        <p class="text-white cursor-pointer">・・・</p>
+        <p id="js_operate_task{{ $index }}" class="text-white cursor-pointer"
+           index="{{ $index }}">・・・</p>
     </div>
+
+    <div id="js_operate_menu" class="hidden">
+        <div class="hover:bg-cyan-500"
+             onclick="editTask({{ $index }})">
+            <div class="px-3 py-1.5 text-gray-300 font-medium cursor-pointer">
+                Edit
+            </div>
+        </div>
+
+        <div class="my-2 border-b-2 border-gray-400"></div>
+
+        <div class="hover:bg-cyan-500">
+            <p class="px-3 py-1.5 text-gray-300 font-medium cursor-pointer"
+               onclick="deleteTask({{ $index }})">
+                Delete
+            </p>
+        </div>
+    </div>
+
+    {{-- tasks --}}
     <div class="p-3 border-b-2 border-gray-600">
         <div id="tasks">
             <table class="table-auto text-white">
@@ -9,8 +31,7 @@
                     <tr>
                         <td id="taskList"
                             project_id="{{ $project_id }}"
-                            task_id="{{ $tasks['id'] }}"
-                            >
+                            task_id="{{ $tasks['id'] }}">
                             @foreach ($tasks['task'] as $task)
                             @foreach ($task as $tag => $content)
                                 @if($tag === 'ul')

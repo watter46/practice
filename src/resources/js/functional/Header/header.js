@@ -1,5 +1,4 @@
-const hamburger = document.getElementById('js_hamburger');
-const body      = document.body;
+const body = document.body;
 
 const toggleDetail = () => {
     document.addEventListener("click", (e) => {

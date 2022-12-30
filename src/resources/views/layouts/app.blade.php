@@ -6,18 +6,9 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+	@vite(['resources/css/Header/header.css', 'resources/js/functional/Header/header.js'])
 	@vite('resources/js/functional/Tasks/tasks.js')
     @livewireStyles
-
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            min-width: 100vh;
-            min-height: 100vh;
-            background: linear-gradient(to bottom right, #223C69, #0F1827); 
-        }
-    </style>
     
     <title>Document</title>
 </head>

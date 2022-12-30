@@ -1,5 +1,8 @@
 <div class="mt-4 border-2 rounded-lg border-gray-600">
-    <div class="hover-project p-3 border-b-2 border-gray-600 hover:bg-gray-800">
+    <div class="py-0.5 pr-3 rounded-t-lg w-full flex justify-end bg-gray-800">
+        <p class="text-white cursor-pointer">・・・</p>
+    </div>
+    <div class="p-3 border-b-2 border-gray-600">
         <div id="tasks">
             <table class="table-auto text-white">
                 <tbody>
@@ -16,7 +19,7 @@
                                         @foreach ($texts as $sub_tag => $li_texts)
                                             @if ($sub_tag === "li" && count($li_texts) === 1)
                                                 <li class="flex items-center">
-                                                    <span class="py-2 px-3 opacity-0 hover:opacity-100 handle">
+                                                    <span class="py-2 px-3 cursor-pointer opacity-0 hover:opacity-100 handle">
                                                         :::
                                                     </span>
                                                     
@@ -44,7 +47,7 @@
                                             @if ($sub_tag === "li" && count($li_texts) !== 1)
                                                 <li>
                                                     <div class="flex items-center">
-                                                        <span class="py-2 px-3 opacity-0 hover:opacity-100 handle">
+                                                        <span class="py-2 px-3 cursor-pointer opacity-0 hover:opacity-100 handle">
                                                             :::
                                                         </span>
                                                         

@@ -8,6 +8,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 	@vite(['resources/css/Header/header.css', 'resources/js/functional/Header/header.js'])
 	@vite('resources/js/functional/Tasks/tasks.js')
+	@vite(['resources/css/Tasks/tasklist.css', 'resources/js/functional/Tasks/taskList.js'])
     @livewireStyles
     
     <title>Document</title>

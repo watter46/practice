@@ -7,7 +7,8 @@ use Livewire\Component;
 class TaskList extends Component
 {
     public $project_id;
-    public $tasks;
+    public $task_id;
+    public $task;
     public $index;
 
     public function render()

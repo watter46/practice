@@ -1,7 +1,9 @@
 import Sortable from 'sortablejs';
 import { UpdateTasks } from './updateTasks';
-import { addTask } from './editor';
+import { addTaskCommand } from './editor';
+import { convertToHtml } from './Convert/convertToHtml';
 
+/* Todo: updateTasksで統一できるか検討する e.target */
 /* check boxが切り替わった時の処理 */
 window.updateTasks = (evt, index) => {
     const task_list    = document.querySelectorAll('#taskList');
@@ -9,9 +11,26 @@ window.updateTasks = (evt, index) => {
     const project_id   = task_list_el.getAttribute('project_id');
     const task_id      = task_list_el.getAttribute('task_id');
 
-    UpdateTasks(task_list_el, project_id, task_id);
+    UpdateTasks(task_list_el, project_id, task_id, index);
 }
 
+const closeEditor = (index) => {
+    console.log("close")
+    const tasks_el = document.querySelectorAll('#tasks')[index];
+    const editor   = document.querySelectorAll('#js_editor')[index];
+
+    tasks_el.classList.remove('hidden');
+    editor.classList.add('hidden');
+}
+
+window.editTasks = (evt, project_id, task_id, index) => {
+    const el = evt.target.closest("#test_textarea");
+    const textarea = el.querySelectorAll("#editor_textarea")[0].value;
+
+    console.log(textarea)
+    // console.log("edit")
+    Livewire.emitTo('task.tasks', 'updateTask', textarea, project_id, task_id, index);
+}
 
 /* タスクの並び替えをしたときの処理　sortablejsの設定 */
 const setupSortable = () => {
@@ -26,18 +45,14 @@ const setupSortable = () => {
                 const project_id   = task_list_el.getAttribute('project_id');
                 const task_id      = task_list_el.getAttribute('task_id');
 
-                UpdateTasks(task_list_el, project_id, task_id);
+                UpdateTasks(task_list_el, project_id, task_id, index);
             }
         });
     })
 }
 
-/* ページロード完了時にsortablejsを設定する */
-document.addEventListener('livewire:load', () => setupSortable());
+window.setupSortable = () => setupSortable();
 
-/* Taskを追加した時にsortablejsを設定する */
-/* livewireはDOMの更新がされた時、blade内のjavascriptが実行されないのでsortablejsの再設定をする */
-window.addEventListener('inputTest', () => setupSortable());
+window.convertToHtml = (tasks, index) => convertToHtml(tasks, index);
 
-window.addTask = () => addTask();
-
+window.addTaskCommand = (e) => addTaskCommand(e);

@@ -56,8 +56,14 @@ final class TasksUseCase {
            
             if ($is_prev_strText)
             {
-                // 最後のコマンドのindexから現在のindexまで、空白テキストがなければ、ul > pタグに挿入する
+                // 最後のコマンドのindexから現在のindexまで、改行がなければ、ul > pタグに挿入する
                 $br_exist = $this->brExist($tasks, $index);
+
+                var_dump($index);
+                echo '<br>';
+                var_dump($tasks);
+                echo '<br>';
+                echo '<br>';
                 
                 $p_last_index = $p_last_index($texts);
 
@@ -147,23 +153,47 @@ final class TasksUseCase {
 
     private function brExist($tasks, $current_index)
     {
+        // var_dump($current_index);
+        // var_dump($tasks);
+        
+
         $before_tasks  = array_slice($tasks, 0, $current_index);
+        // echo '<br>';
+        // var_dump($before_tasks);
 
         $commands      = array_filter($before_tasks, fn($text) => $this->isCommand($text));
         $commands_keys = array_keys($commands);
         $last_li_index = end($commands_keys);
 
+        // echo '<br>';
+        // var_dump($commands);
+        // echo '<br>';
+        // var_dump($commands_keys);
+        // echo '<br>';
+        // var_dump($last_li_index);
+
         $search_tasks  = array_slice($before_tasks, $last_li_index, $current_index);
+
+        // echo '<br>';
+        // var_dump($search_tasks);
 
         foreach($search_tasks as $text)
         {
+            // var_dump($search_tasks);
+            // echo '<br>';
             $is_empty = $this->isEmpty($text);
+            
+            // echo '<br>';
+            // var_dump($is_empty);
 
             if ($is_empty)
             {
                 return true;
             }
+
+            return false;
         }
+        // dd($tasks);
     }
 
     private function WrapUl($texts)

@@ -1,4 +1,4 @@
-<div class="operate mt-4 border-2 rounded-lg border-gray-600" :wire:key="{{ $tasks['id'] }}">
+<div class="operate mt-4 border-2 rounded-lg border-gray-600" :wire:key="{{ $task_id }}">
     {{-- task bar --}}
     <div class="py-0.5 pr-3 rounded-t-lg w-full flex justify-end bg-gray-800">
         <p id="js_operate_task{{ $index }}" class="text-white cursor-pointer"
@@ -31,91 +31,32 @@
                     <tr>
                         <td id="taskList"
                             project_id="{{ $project_id }}"
-                            task_id="{{ $tasks['id'] }}">
-                            @foreach ($tasks['task'] as $task)
-                            @foreach ($task as $tag => $content)
-                                @if($tag === 'ul')
-                                    <ul id="sortable">
-                                        @foreach ($content as $texts)
-                                        @foreach ($texts as $sub_tag => $li_texts)
-                                            @if ($sub_tag === "li" && count($li_texts) === 1)
-                                                <li class="flex items-center">
-                                                    <span class="py-2 px-3 cursor-pointer opacity-0 hover:opacity-100 handle">
-                                                        :::
-                                                    </span>
-                                                    
-                                                    @if (str_starts_with($li_texts['input'], '- [ ]'))
-                                                        <input type="checkbox"
-                                                               class="mr-2"
-                                                               onchange="updateTasks(event, {{ $index }})">
-                                                        <p>
-                                                            {{ ltrim($li_texts['input'], '- [ ] ') }}
-                                                        </p>
-                                                    @endif
-                                                    
-                                                    @if (str_starts_with($li_texts['input'], '- [|]'))
-                                                        <input type="checkbox"
-                                                               class="mr-2"
-                                                               checked
-                                                               onchange="updateTasks(event, {{ $index }})">
-                                                        <p>
-                                                            {{ ltrim($li_texts['input'], '- [|] ') }}
-                                                        </p>
-                                                    @endif
-                                                </li>
-                                            @endif
-
-                                            @if ($sub_tag === "li" && count($li_texts) !== 1)
-                                                <li>
-                                                    <div class="flex items-center">
-                                                        <span class="py-2 px-3 cursor-pointer opacity-0 hover:opacity-100 handle">
-                                                            :::
-                                                        </span>
-                                                        
-                                                        @if (str_starts_with($li_texts['input'], '- [ ]'))
-                                                            <input type="checkbox"
-                                                                   class="mr-2"
-                                                                   onchange="updateTasks(event, {{ $index }})">
-                                                            <p>
-                                                                {{ ltrim($li_texts['input'], '- [ ] ') }}
-                                                            </p>
-                                                        @endif
-                                                        
-                                                        @if (str_starts_with($li_texts['input'], '- [|]'))
-                                                            <input type="checkbox"
-                                                                   class="mr-2"
-                                                                   checked
-                                                                   onchange="updateTasks(event, {{ $index }})">
-                                                            <p>
-                                                                {{ ltrim($li_texts['input'], '- [|] ') }}
-                                                            </p>
-                                                        @endif
-                                                    </div>
-                                                    
-                                                    <div class="ml-14">
-                                                        <p>
-                                                            {!! nl2br(e($li_texts['p'])) !!}</p>
-                                                    </div>
-                                                </li>
-                                            @endif
-                                        @endforeach
-                                        @endforeach
-                                    </ul>
-                                @endif
-
-                                @if($tag === "p")
-                                    <p>{!! nl2br(e($content)) !!}</p>
-                                @endif
-
-                                @if($tag === "br")
-                                    <br>
-                                @endif
-                            @endforeach
-                            @endforeach
+                            task_id="{{ $task_id }}">
                         </td>
                     </tr>
                 </tbody>
             </table>
         </div>
     </div>
+
+    {{-- Edit時にタスクの代わりに表示するテキストエリア --}}
+
+    <livewire:task.update-task :project_id="$project_id"
+                               :task_id="$task_id"
+                               :index="$index"
+                               :wire:key="$task_id" />
+
+    
+    <script>
+        /* ページロード完了時にsortablejsを設定する */
+        document.addEventListener('livewire:load', () => {
+            const tasks = @this.task;
+            const index = @this.index;
+            
+            // console.log(tasks)
+            // console.log(index)
+            convertToHtml(tasks, index);
+            setupSortable();
+        });
+    </script>
 </div>

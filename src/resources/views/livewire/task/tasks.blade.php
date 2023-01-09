@@ -27,20 +27,21 @@
     {{-- main --}}
     <div class="flex justify-center">
         <div class="py-5 pr-5 w-8/12">
-            @foreach ($project['tasks'] as $index => $tasks)
-                <div>
+            {{-- <div class="bg-violet-300"> --}}
+                @foreach ($project['tasks'] as $index => $tasks)
                     <livewire:task.task-list :project_id="$project['id']"
-                                             :tasks="$tasks"
+                                             :task_id="$tasks['id']"
+                                             :task="$tasks['task']"
                                              :index="$index"
                                              :wire:key="$tasks['id']" />
-                </div>
-            @endforeach
+                @endforeach
+            {{-- </div> --}}
 
             <div class="w-full mt-3 border-b-2 border-gray-400"></div>
-    
+
             {{-- TextEditor --}}
             <div class="mt-3">
-                <livewire:task.editor :project_id="$project['id']" />
+                <livewire:task.add-task :project_id="$project['id']" />
             </div>
         </div>
 
@@ -60,4 +61,34 @@
             </div>
         </div>
     </div>
+
+    <script>
+        /* Taskを追加した時にsortablejsを設定する */
+        /* livewireはDOMの更新がされた時、blade内のjavascriptが実行されないのでsortablejsの再設定をする */
+        window.addEventListener('js_load', (event) => { 
+            const index   = event.detail.index;
+
+            const task_list_el = document.querySelectorAll('#taskList')[index];
+            
+            /* 編集前の子ノードを削除 */
+            while (task_list_el.firstChild){
+                task_list_el.removeChild(task_list_el.firstChild);
+            }
+
+            const project = event.detail.project;
+
+            const tasks = project['tasks'][index]['task'];
+
+            convertToHtml(tasks, index)
+            setupSortable();
+
+            const tasks_el = document.querySelectorAll('#tasks')[index];
+            const editor   = document.querySelectorAll('#js_editor')[index];
+
+            tasks_el.classList.remove('hidden');
+            editor.classList.add('hidden');
+            
+            console.log("更新された")
+        });
+    </script>
 </div>

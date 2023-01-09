@@ -4,12 +4,23 @@ const setTaskCommand = () => command = "- [ ] ";
 
 const getTaskCommand = () => "- [ ] ";
 
-export const addTask = () => {
+// Todo: editortextarea
+export const addTaskCommand = (e) => {
     // コマンドを保存
     setTaskCommand();
 
-    const textarea_element = document.getElementById("editor_textarea")
-    const textarea         = textarea_element.value;
+    // const textarea_element = document.getElementById("editor_textarea")
+    // const textarea         = textarea_element.value;
+
+    /* テスト */
+    // const el = e.target.closest("#js_editor_command");
+    const el = e.target.closest("#test_textarea");
+    // const test_textarea = el.getElementById("editor_textarea");
+    // console.log(el.children[1].lastChild)
+    const textarea = el.querySelectorAll("#editor_textarea")[0].value;
+    /*  */
+
+    // console.log(textarea)
 
     const position     = textarea_element.selectionStart;
     const length       = textarea.length;
@@ -164,7 +175,7 @@ export const addTask = () => {
 const commandExecute = (e) => {
     if (e.ctrlKey && e.key === "[")
     {
-        addTask();
+        addTaskCommand(e);
     }
 
     if (e.ctrlKey && e.key === 'Enter')

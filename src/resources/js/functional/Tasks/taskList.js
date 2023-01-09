@@ -58,12 +58,16 @@ window.deleteTask  = (index) => deleteTask(index);
 
 
 /* タスク操作の設定 */
-const body = document.body;
-
-const toggleOperateTask = () => {
+const toggleOperateMenu = () => {
     document.addEventListener("click", (e) => {
 
-        const removeOperateClass = () => {
+        const addJsOperateMenu = () => {
+            const operate_menu_class = document.querySelectorAll('#js_operate_menu')[index].classList;
+            operate_menu_class.add("operate-menu");
+            operate_menu_class.remove("hidden");
+        }
+        
+        const removeJsOperateMenu = () => {
             const targets = document.querySelectorAll('#js_operate_menu');
 
             [...targets].forEach(target => {
@@ -76,22 +80,50 @@ const toggleOperateTask = () => {
 
         const el_id = "js_operate_task" + index;
        
-        const has_el_id = (e.target.id === el_id);
+        const is_click = (e.target.id === el_id);
 
-        // operate_menuをクリックしたか
-        if (has_el_id)
+        const bodyToggleJsOpenOperate = () => {
+            const body_class = document.body.classList;
+
+            const has_js_open_operate = body_class.contains("js_open_operate");
+
+            if (has_js_open_operate)
+            {
+                body_class.remove("js_open_operate");
+            }
+            else
+            {
+                body_class.add("js_open_operate")
+            }
+        }
+
+        const bodyRemoveJsOpenOperate = () => {
+            const body_class = document.body.classList;
+
+            body_class.remove("js_open_operate");
+        }
+
+        const hasJsOpenOperate = () => {
+            const body_class = document.body.classList;
+
+            return body_class.contains("js_open_operate");
+        }
+
+        if (is_click)
         {
-            removeOperateClass();
+            bodyToggleJsOpenOperate();
+            
+            const has_js_open_operate = hasJsOpenOperate();
 
-            const target = document.querySelectorAll('#js_operate_menu')[index];
-            target.classList.add("operate-menu");
-            target.classList.remove("hidden");
+            if  (has_js_open_operate) addJsOperateMenu();
+            if (!has_js_open_operate) removeJsOperateMenu();
         }
         else
         {
-            removeOperateClass();
+            bodyRemoveJsOpenOperate();
+            removeJsOperateMenu();
         }
     });
 }
 
-toggleOperateTask();
+toggleOperateMenu();

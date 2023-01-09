@@ -27,15 +27,13 @@
     {{-- main --}}
     <div class="flex justify-center">
         <div class="py-5 pr-5 w-8/12">
-            {{-- <div class="bg-violet-300"> --}}
-                @foreach ($project['tasks'] as $index => $tasks)
-                    <livewire:task.task-list :project_id="$project['id']"
-                                             :task_id="$tasks['id']"
-                                             :task="$tasks['task']"
-                                             :index="$index"
-                                             :wire:key="$tasks['id']" />
-                @endforeach
-            {{-- </div> --}}
+            @foreach ($project['tasks'] as $index => $tasks)
+                <livewire:task.task-list :project_id="$project['id']"
+                                         :task_id="$tasks['id']"
+                                         :task="$tasks['task']"
+                                         :index="$index"
+                                         :wire:key="$tasks['id']" />
+            @endforeach
 
             <div class="w-full mt-3 border-b-2 border-gray-400"></div>
 

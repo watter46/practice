@@ -6,7 +6,6 @@ use Livewire\Component;
 
 use App\Models\Project;
 use App\Models\Task;
-use App\UseCases\TasksUseCase;
 
 class Tasks extends Component
 {

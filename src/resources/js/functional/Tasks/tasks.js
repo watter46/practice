@@ -48,7 +48,7 @@ const setupSortable = () => {
                 UpdateTasks(task_list_el, project_id, task_id, index);
             }
         });
-    })
+    });
 }
 
 window.setupSortable = () => setupSortable();

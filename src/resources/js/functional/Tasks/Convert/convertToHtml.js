@@ -5,8 +5,8 @@ import { appendTaskInUl,
          appendNewlineInTaskList } from './createElements'
 
 export const convertToHtml = (tasks, index) => {
-    // console.log(index)
-    console.log(tasks)
+    console.log(index)
+    // console.log(tasks)
 
     const task = tasks.split(/\r\n|\n/);
 

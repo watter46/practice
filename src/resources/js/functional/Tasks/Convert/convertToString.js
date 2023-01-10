@@ -1,54 +1,53 @@
 export const convertToString = (task_list_el) => {
 /* NodeからElementノードのみ抽出　Textノード(nodeType = 3)の排除 */
-const filtered_texts = [...task_list_el.childNodes].filter(node => node.nodeType !== 3)
+const filtered = [...task_list_el.childNodes].filter(node => node.nodeType !== 3)
 
-/* CHECKBOXのコマンドの文字列をテキストに追加する */
-const modified_texts = filtered_texts.map(element => {
-    if (element.tagName === "UL")
-    {
-        const li_els = element.getElementsByTagName('li');
-
-        return [...li_els].map(li_el => {
-            const is_checked = li_el.getElementsByTagName('input')[0].checked;
-            const p_els      = li_el.getElementsByTagName('p');
-
-            const texts        = [...p_els].map(p_el => p_el.innerText);
-            const command_text = texts[0];
-            const comment_text = texts[1];
-
-            const addCommandText = () => {
-                if (is_checked)
-                {
-                    return "- [|] " + command_text;
-                }
-
-                if (!is_checked)
-                {
-                    return "- [ ] " + command_text;
-                }
-            }
-
-            if (comment_text === undefined)
-            {
-                return addCommandText();
-            }
-
-            return [addCommandText(),comment_text];
-        });
-    }
-
-    if (element.tagName === "P")
-    {
-        return element.innerText;
-    }
-
-    if (element.tagName === "BR")
-    {
-        return element.innerText;
-    }
+const converted_list = filtered.map(element => {
+    if (element.tagName === "UL") return getInnerTexts(element);
+    if (element.tagName === "P")  return getInnerTexts(element);
+    if (element.tagName === "BR") return getInnerTexts(element);
 });
 
-const modified_task = modified_texts.flat().join().replace(/,/g, '\n');
+/* カンマ区切りの配列を改行に変換して文字列で連結する */
+const converted_str = converted_list.join().replace(/,/g, '\n');
 
-    return modified_task;
+    return converted_str;
+}
+
+const getInnerTexts = (element) => {
+    const li_list = element.getElementsByTagName('li');
+
+    if (li_list.length === 0) return element.innerText;
+
+    const innerTexts = [...li_list].map(li => {
+        const is_checked = li.getElementsByTagName('input')[0].checked;
+        const p_list     = li.getElementsByTagName('p');
+
+        const texts    = [...p_list].map(p => p.innerText);
+        const task     = texts[0];
+        const comments = texts.slice(1, texts.length);
+
+        const appendToCommand = () => {
+            if (is_checked)
+            {
+                return "- [|] " + task;
+            }
+
+            if (!is_checked)
+            {
+                return "- [ ] " + task;
+            }
+        }
+
+        const canReturnComments = () => {
+            if (comments.length === 0) return;
+
+            return comments;
+        }
+
+        /* タスク内のコメントがない場合のundefinedを除去 */
+        return [appendToCommand(), canReturnComments()].flat().filter(v => v);
+    });
+
+    return innerTexts;
 }

@@ -5,8 +5,6 @@ import { appendTaskInUl,
          appendNewlineInTaskList } from './createElements'
 
 export const convertToHtml = (tasks, index) => {
-    console.log(index)
-    // console.log(tasks)
 
     const task = tasks.split(/\r\n|\n/);
 
@@ -53,7 +51,13 @@ const isEmpty = (text) => {
 const newlineExist = (task, current_index) => {
     const before_texts = task.slice(0, current_index);
 
-    return before_texts.some(text => text === "");
+    const reversed     = before_texts.reverse();
+    const closest_task = reversed.find(text => text.startsWith('- [ ] ') || text.startsWith('- [|] '));
+    const closest_task_index = task.findIndex(text => text === closest_task);
+
+    const sliced = task.slice(closest_task_index, current_index);
+
+    return sliced.some(text => text === "")
 }
 
 const appendTask = (task, index, text, current_index) => {

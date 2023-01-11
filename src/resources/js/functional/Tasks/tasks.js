@@ -35,7 +35,7 @@ window.editTasks = (evt, project_id, task_id, index) => {
 /* タスクの並び替えをしたときの処理　sortablejsの設定 */
 const setupSortable = () => {
     const sortable_el = document.querySelectorAll('#sortable');
-
+    
     sortable_el.forEach(element => {
         Sortable.create(element, {
             handle: '.handle',
@@ -57,3 +57,30 @@ window.setupSortable = () => setupSortable();
 window.convertToHtml = (tasks, index) => convertToHtml(tasks, index);
 
 window.addTaskCommand = (e) => addTaskCommand(e);
+
+const loadSetting = (event) => {
+    console.log("2次load")
+    const index   = event.detail.index;
+
+    // closeEditor(index);
+
+    const task_list_el = document.querySelectorAll('#taskList')[index];
+
+    /* 編集前の子ノードを削除 */
+    while (task_list_el.firstChild){
+        task_list_el.removeChild(task_list_el.firstChild);
+    }
+
+    const tasks_el = document.querySelectorAll('#tasks')[index];
+    const editor   = document.querySelectorAll('#js_editor')[index];
+
+    tasks_el.classList.remove('hidden');
+    editor.classList.add('hidden');
+
+    const tasks = event.detail.project['tasks'][index]['task'];
+
+    convertToHtml(tasks, index)
+    setupSortable();
+}
+
+window.loadSetting = (event) => loadSetting(event);

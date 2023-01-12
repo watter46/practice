@@ -1,4 +1,4 @@
-<div class="operate mt-4 border-2 rounded-lg border-gray-600" :wire:key="{{ $task_id }}">
+<div class="operate mt-4 border-2 rounded-lg border-gray-600">
     {{-- task bar --}}
     <div class="py-0.5 pr-3 rounded-t-lg w-full flex justify-end bg-gray-800">
         <p id="js_operate_task{{ $index }}" class="text-white cursor-pointer"
@@ -7,7 +7,7 @@
 
     <div id="js_operate_menu" class="hidden">
         <div class="hover:bg-cyan-500"
-             onclick="editTask({{ $index }})">
+             onclick="openEditor({{ $index }})">
             <div class="px-3 py-1.5 text-gray-300 font-medium cursor-pointer">
                 Edit
             </div>
@@ -17,7 +17,7 @@
 
         <div class="hover:bg-cyan-500">
             <p class="px-3 py-1.5 text-gray-300 font-medium cursor-pointer"
-               onclick="deleteTask({{ $index }})">
+               wire:click="$emit('deleteTask', {{ $task_id }})">
                 Delete
             </p>
         </div>
@@ -31,8 +31,10 @@
                     <tr>
                         <td id="taskList"
                             project_id="{{ $project_id }}"
-                            task_id="{{ $task_id }}">
+                            task_id="{{ $task_id }}"
+                            index="{{ $index }}">
                         </td>
+                        {{-- createElemets.jsにHTMLの処理を記載 --}}
                     </tr>
                 </tbody>
             </table>
@@ -40,23 +42,21 @@
     </div>
 
     {{-- Edit時にタスクの代わりに表示するテキストエリア --}}
-
     <livewire:task.update-task :project_id="$project_id"
                                :task_id="$task_id"
-                               :index="$index"
-                               :wire:key="$task_id" />
-
+                               :index="$index" />
     
     <script>
-        /* ページロード完了時にsortablejsを設定する */
+        /* ロード時に受け取ったデータから、HTMLエレメントに変換する */
         document.addEventListener('livewire:load', () => {
             const tasks = @this.task;
             const index = @this.index;
             
-            // console.log(tasks)
-            // console.log(index)
             convertToHtml(tasks, index);
-            setupSortable();
         });
+
+        /* ページ全体を読み込みが完了した時にsortablejsを設定する */
+        /* livewire:loadでsetupSortableを設定すると反映されない箇所があるのでonloadで対応した */
+        document.body.onload = () => setupSortable();
     </script>
 </div>

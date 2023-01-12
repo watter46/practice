@@ -21,7 +21,7 @@ const checkbox_element = (text, index) => {
     const checkbox = document.createElement('input');
     checkbox.type="checkbox";
     checkbox.classList.add('mr-2');
-    checkbox.setAttribute('onchange', `updateTasks(${index})`);
+    checkbox.setAttribute('onchange', `updateCheckbox(${index})`);
 
     if (text.startsWith('- [|] ')) {
         checkbox.setAttribute('checked', 'checked');

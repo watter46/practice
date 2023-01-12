@@ -9,12 +9,13 @@ use App\Models\Task;
 
 class Tasks extends Component
 {
-    public $project;
+    private $project;
     private $index;
 
     protected $listeners = [
         'fetchProject' => 'fetchProject',
         'updateTask'   => 'updateTask',
+        'deleteTask'   => 'deleteTask',
         'setIndex'     => 'setIndex'
     ];
 
@@ -51,6 +52,11 @@ class Tasks extends Component
         Task::find($task_id)->update(['task' => $modified_task]);
 
         $this->fetchProject($project_id);
+    }
+
+    public function deleteTask($task_id)
+    {
+        dd($task_id);
     }
 
     public function toNewProject()

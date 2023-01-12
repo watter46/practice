@@ -63,30 +63,6 @@
     <script>
         /* Taskを追加した時にsortablejsを設定する */
         /* livewireはDOMの更新がされた時、blade内のjavascriptが実行されないのでsortablejsの再設定をする */
-        window.addEventListener('js_load', (event) => { 
-            const index   = event.detail.index;
-
-            const task_list_el = document.querySelectorAll('#taskList')[index];
-            
-            /* 編集前の子ノードを削除 */
-            while (task_list_el.firstChild){
-                task_list_el.removeChild(task_list_el.firstChild);
-            }
-
-            const project = event.detail.project;
-
-            const tasks = project['tasks'][index]['task'];
-
-            convertToHtml(tasks, index)
-            setupSortable();
-
-            const tasks_el = document.querySelectorAll('#tasks')[index];
-            const editor   = document.querySelectorAll('#js_editor')[index];
-
-            tasks_el.classList.remove('hidden');
-            editor.classList.add('hidden');
-            
-            console.log("更新された")
-        });
+        window.addEventListener('js_load', (event) => loadSetting(event)); 
     </script>
 </div>

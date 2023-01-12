@@ -1,52 +1,11 @@
-const editTask = (index) => {
-    console.log("edit")
-    console.log(index)
-}
-
-const deleteTask = (index) => {
-    console.log("delete")
-    console.log(index)
-}
-
-window.editTask   = (index) => editTask(index);
-window.deleteTask = (index) => deleteTask(index);
+import { toggleOperateMenu } from './TaskList/OperateMenu/toggleOperateMenu';
+import { closeEditor }       from './Editor/closeEditor';
+import { openEditor }        from './Editor/openEditor';
 
 
-/* タスク操作の設定 */
-const body = document.body;
+/* operateMenuの開閉の設定 */
+toggleOperateMenu();
 
-const toggleOperateTask = () => {
-    document.addEventListener("click", (e) => {
-
-        const removeOperateClass = () => {
-            const targets = document.querySelectorAll('#js_operate_menu');
-
-            [...targets].forEach(target => {
-                target.classList.add("hidden");
-                target.classList.remove("operate-menu");
-            });
-        }
-
-        const index = e.target.getAttribute('index');
-
-        const el_id = "js_operate_task" + index;
-       
-        const has_el_id = (e.target.id === el_id);
-
-        // operate_menuをクリックしたか
-        if (has_el_id)
-        {
-            removeOperateClass();
-
-            const target = document.querySelectorAll('#js_operate_menu')[index];
-            target.classList.add("operate-menu");
-            target.classList.remove("hidden");
-        }
-        else
-        {
-            removeOperateClass();
-        }
-    });
-}
-
-toggleOperateTask();
+/* Edit時のエディターの開閉 */
+window.openEditor  = (index) => openEditor(index)
+window.closeEditor = (index) => closeEditor(index);

@@ -6,20 +6,22 @@ use Livewire\Component;
 
 use App\Models\Project;
 use App\Models\Task;
-use App\UseCases\TasksUseCase;
 
 class Tasks extends Component
 {
     private $project;
+    private $index;
 
     protected $listeners = [
         'fetchProject' => 'fetchProject',
-        'updateTask'   => 'updateTask'
+        'updateTask'   => 'updateTask',
+        'deleteTask'   => 'deleteTask',
+        'setIndex'     => 'setIndex'
     ];
 
     public function render()
     {
-        $this->dispatchBrowserEvent('inputTest');
+        $this->dispatchBrowserEvent('js_load', ['project' => $this->project ,'index' => $this->index]);
         
         return view('livewire.task.tasks', [
             'project' => $this->project
@@ -31,37 +33,30 @@ class Tasks extends Component
         $this->fetchProject($id);
     }
 
+    public function setIndex($index)
+    {
+        $this->index = $index;
+    }
+
     public function fetchProject($id)
     {
         $project = Project::with('tasks')->find($id);
 
-        $tasks = $this->splitTask($project);
-
-        $this->project = collect($project)->replace(['tasks' => $tasks]);
+        $this->project = $project;
     }
 
-    private function splitTask($project)
+    public function updateTask($modified_task, $project_id, $task_id, $index)
     {
-        $usecase = new TasksUseCase();
-        $task = collect($project['tasks'])->map(function ($items) use ($usecase) {
-            
-            /* 改行で分割する */
-            $texts = preg_split("/\r\n|\n/", $items['task']);
-            $items['task'] = $usecase->convertToTag($texts);
-            // $test = $usecase->convertToTag($texts);
-            // dd($test);
-
-            return $items;
-        });
-
-        return $task;
-    }
-
-    public function updateTask($modified_task, $project_id, $task_id)
-    {
+        $this->index = $index;
+        
         Task::find($task_id)->update(['task' => $modified_task]);
 
         $this->fetchProject($project_id);
+    }
+
+    public function deleteTask($task_id)
+    {
+        dd($task_id);
     }
 
     public function toNewProject()

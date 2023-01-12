@@ -3,36 +3,46 @@
 namespace App\Http\Livewire\Task;
 
 use Livewire\Component;
-use App\Models\Task;
+
 
 class Editor extends Component
 {
     public $project_id;
+    public $task_id;
+    
     public $task;
-
-    protected $listeners = [
-        'addTask' => 'addTask',
-    ];
+    public $index;
+    public $btn_name;
 
     protected $rules = [
-        'task' => 'required | string'
+        'task' => 'string'
     ];
+
+    // Todo: updateとaddの時nameを変更する
+    private function btnName()
+    {
+        $this->btn_name = 'Publish Post';
+    }
 
     public function render()
     {
+        $this->btnName();
+
         return view('livewire.task.editor');
     }
 
-    public function addTask($project_id)
+    // public function updatedTask($task)
+    // {
+    //     $this->emitUp('setTask', $task);
+
+    //     // $this->reset('task');
+    // }
+
+    
+    public function emitUpProcess()
     {
-        $validated = $this->validate();
+        $this->emitUp('process', $this->task);
 
-        $merged = array_merge(['project_id' => $project_id], $validated);
-
-        Task::create($merged);
-        
-        $this->emitUp('fetchProject', $project_id);
-        
         $this->reset('task');
     }
 }

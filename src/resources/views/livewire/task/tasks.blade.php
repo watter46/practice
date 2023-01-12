@@ -28,19 +28,18 @@
     <div class="flex justify-center">
         <div class="py-5 pr-5 w-8/12">
             @foreach ($project['tasks'] as $index => $tasks)
-                <div>
-                    <livewire:task.task-list :project_id="$project['id']"
-                                             :tasks="$tasks"
-                                             :index="$index"
-                                             :wire:key="$tasks['id']" />
-                </div>
+                <livewire:task.task-list :project_id="$project['id']"
+                                         :task_id="$tasks['id']"
+                                         :task="$tasks['task']"
+                                         :index="$index"
+                                         :wire:key="$tasks['id']" />
             @endforeach
 
             <div class="w-full mt-3 border-b-2 border-gray-400"></div>
-    
+
             {{-- TextEditor --}}
             <div class="mt-3">
-                <livewire:task.editor :project_id="$project['id']" />
+                <livewire:task.add-task :project_id="$project['id']" />
             </div>
         </div>
 
@@ -60,4 +59,10 @@
             </div>
         </div>
     </div>
+
+    <script>
+        /* Taskを追加した時にsortablejsを設定する */
+        /* livewireはDOMの更新がされた時、blade内のjavascriptが実行されないのでsortablejsの再設定をする */
+        window.addEventListener('js_load', (event) => loadSetting(event)); 
+    </script>
 </div>

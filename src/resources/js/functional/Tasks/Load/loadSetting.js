@@ -4,19 +4,19 @@ import { convertToHtml } from '../Convert/convertToHtml';
 
 
 export const loadSetting = (event) => {
-    const index   = event.detail.index;
+    const tasks = event.detail.tasks;
 
-    const task_list_el = document.querySelectorAll('#taskList')[index];
+    const taskList_els = document.querySelectorAll('#taskList');
 
-    /* 編集前の子ノードを削除 */
-    while (task_list_el.firstChild){
-        task_list_el.removeChild(task_list_el.firstChild);
-    }
+    [...taskList_els].forEach(taskList => {
+        while (taskList.firstChild) {
+            taskList.removeChild(taskList.firstChild);
+        }
+    });
 
-    closeEditor(index);
+    tasks.forEach((task, index) => {
+        convertToHtml(task['task'], index)
+    });
 
-    const tasks = event.detail.project['tasks'][index]['task'];
-
-    convertToHtml(tasks, index)
     setupSortable();
 }

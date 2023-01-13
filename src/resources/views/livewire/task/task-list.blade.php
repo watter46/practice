@@ -17,7 +17,7 @@
 
         <div class="hover:bg-cyan-500">
             <p class="px-3 py-1.5 text-gray-300 font-medium cursor-pointer"
-               wire:click="$emit('deleteTask', {{ $task_id }})">
+               wire:click="$emit('deleteTask',{{ $project_id }}, {{ $task_id }}, {{ $index }})">
                 Delete
             </p>
         </div>
@@ -34,7 +34,6 @@
                             task_id="{{ $task_id }}"
                             index="{{ $index }}">
                         </td>
-                        {{-- createElemets.jsにHTMLの処理を記載 --}}
                     </tr>
                 </tbody>
             </table>
@@ -44,7 +43,8 @@
     {{-- Edit時にタスクの代わりに表示するテキストエリア --}}
     <livewire:task.update-task :project_id="$project_id"
                                :task_id="$task_id"
-                               :index="$index" />
+                               :index="$index"
+                               :wire:key="'update-task-'. $task_id" />
     
     <script>
         /* ロード時に受け取ったデータから、HTMLエレメントに変換する */

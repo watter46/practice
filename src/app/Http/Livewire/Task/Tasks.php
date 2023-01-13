@@ -10,19 +10,20 @@ use App\Models\Task;
 class Tasks extends Component
 {
     private $project;
+    // public $project;
     private $index;
 
     protected $listeners = [
         'fetchProject' => 'fetchProject',
         'updateTask'   => 'updateTask',
         'deleteTask'   => 'deleteTask',
-        'setIndex'     => 'setIndex'
+        'setIndex'     => 'setIndex',
+        'refresh'      => '$refresh'
     ];
 
     public function render()
     {
-        $this->dispatchBrowserEvent('js_load', ['project' => $this->project ,'index' => $this->index]);
-        
+        // return view('livewire.task.tasks');
         return view('livewire.task.tasks', [
             'project' => $this->project
         ]);
@@ -52,12 +53,19 @@ class Tasks extends Component
         Task::find($task_id)->update(['task' => $modified_task]);
 
         $this->fetchProject($project_id);
+        $this->dispatchBrowserEvent('js_loadSetting', ['tasks' => $this->project['tasks'], 'index' => $this->index]);
     }
 
-    public function deleteTask($task_id)
+    public function deleteTask($project_id, $task_id, $index)
     {
-        dd($task_id);
-    }
+        $this->index = $index;
+
+        Task::destroy($task_id);
+
+        $this->fetchProject($project_id);
+        
+        $this->dispatchBrowserEvent('js_loadSetting', ['tasks' => $this->project['tasks'], 'index' => $this->index]);
+    } 
 
     public function toNewProject()
     {

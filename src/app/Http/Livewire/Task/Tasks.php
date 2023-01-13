@@ -10,20 +10,17 @@ use App\Models\Task;
 class Tasks extends Component
 {
     private $project;
-    // public $project;
     private $index;
 
     protected $listeners = [
         'fetchProject' => 'fetchProject',
+        'storeTask'    => 'storeTask',
         'updateTask'   => 'updateTask',
         'deleteTask'   => 'deleteTask',
-        'setIndex'     => 'setIndex',
-        'refresh'      => '$refresh'
     ];
 
     public function render()
     {
-        // return view('livewire.task.tasks');
         return view('livewire.task.tasks', [
             'project' => $this->project
         ]);
@@ -34,9 +31,9 @@ class Tasks extends Component
         $this->fetchProject($id);
     }
 
-    public function setIndex($index)
+    private function dispatch()
     {
-        $this->index = $index;
+        $this->dispatchBrowserEvent('js_loadSetting', ['tasks' => $this->project['tasks'], 'index' => $this->index]);
     }
 
     public function fetchProject($id)
@@ -46,6 +43,17 @@ class Tasks extends Component
         $this->project = $project;
     }
 
+    public function storeTask($project_id, $task)
+    {
+        Task::create([
+            'project_id' => $project_id,
+            'task'       => $task
+        ]);
+
+        $this->fetchProject($project_id);
+        $this->dispatch();
+    }
+
     public function updateTask($modified_task, $project_id, $task_id, $index)
     {
         $this->index = $index;
@@ -53,7 +61,7 @@ class Tasks extends Component
         Task::find($task_id)->update(['task' => $modified_task]);
 
         $this->fetchProject($project_id);
-        $this->dispatchBrowserEvent('js_loadSetting', ['tasks' => $this->project['tasks'], 'index' => $this->index]);
+        $this->dispatch();
     }
 
     public function deleteTask($project_id, $task_id, $index)
@@ -63,8 +71,7 @@ class Tasks extends Component
         Task::destroy($task_id);
 
         $this->fetchProject($project_id);
-        
-        $this->dispatchBrowserEvent('js_loadSetting', ['tasks' => $this->project['tasks'], 'index' => $this->index]);
+        $this->dispatch();
     } 
 
     public function toNewProject()

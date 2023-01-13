@@ -15,13 +15,6 @@ window.updateCheckbox = (index) => {
     UpdateTasks(task_list_el, project_id, task_id, index);
 }
 
-window.updateTasks = (event, project_id, task_id, index) => {
-    const target = event.target.closest("#test_textarea");
-    const edited = target.querySelectorAll("#editor_textarea")[0].value;
-
-    Livewire.emitTo('task.tasks', 'updateTask', edited, project_id, task_id, index);
-}
-
 window.setupSortable = () => setupSortable();
 
 window.convertToHtml = (tasks, index) => convertToHtml(tasks, index);

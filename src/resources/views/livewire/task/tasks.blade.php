@@ -41,7 +41,9 @@
 
             {{-- TextEditor --}}
             <div class="mt-3">
-                <livewire:task.add-task :project_id="'add-task-'. $project['id']" />
+                {{-- <livewire:task.add-task :project_id="$project['id']" /> --}}
+                {{-- テキストエディタ --}}
+                <livewire:task.editor :project_id="$project['id']" :method="'add'" />
             </div>
         </div>
 

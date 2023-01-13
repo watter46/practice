@@ -31,30 +31,33 @@
         <textarea id="editor_textarea" name="editor_textarea" wire:model.defer="task" rows="8" class="block px-0 w-full text-sm text-gray-800 bg-white focus:outline-none border-0 dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400" placeholder="Write an article..." required=""></textarea>
     </div>
 
-    {{-- Post Button --}}
-    {{-- <div class="mt-2 flex justify-end">
-        <button type="button"
-                class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-lime-600 rounded-lg focus:ring-4 dark:focus:ring-lime-500 hover:bg-lime-500"
-                wire:click="emitUpProcess">
-            {{ $btn_name }}
-        </button>
-    </div> --}}
-
     <div class="flex justify-end">
-        <div class="mt-2 mr-2 flex justify-end">
-            <button type="button"
-                    class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-lime-600 rounded-lg focus:ring-4 dark:focus:ring-lime-500 hover:bg-lime-500"
-                    onclick="closeEditor({{ $index }})">
-                Cancel
-            </button>
-        </div>
+        @if ($method === 'add')
+            <div class="mt-2 flex justify-end">
+                <button type="submit"
+                        class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-lime-600 rounded-lg focus:ring-4 dark:focus:ring-lime-500 hover:bg-lime-500"
+                        wire:click="emitUpTask">
+                    Publish Post
+                </button>
+            </div>
+        @endif
 
-        <div class="mt-2 flex justify-end">
-            <button type="click"
-                    class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-lime-600 rounded-lg focus:ring-4 dark:focus:ring-lime-500 hover:bg-lime-500"
-                    onclick="updateTasks(event, {{ $project_id }}, {{ $task_id }}, {{ $index }})">
-                Update
-            </button>
-        </div>
+        @if ($method === 'update')
+            <div class="mt-2 mr-2 flex justify-end">
+                <button type="button"
+                        class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-lime-600 rounded-lg focus:ring-4 dark:focus:ring-lime-500 hover:bg-lime-500"
+                        onclick="closeEditor({{ $index }})">
+                    Cancel
+                </button>
+            </div>
+
+            <div class="mt-2 flex justify-end">
+                <button type="click"
+                        class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-lime-600 rounded-lg focus:ring-4 dark:focus:ring-lime-500 hover:bg-lime-500"
+                        wire:click="emitUpTask">
+                    Update
+                </button>
+            </div>
+        @endif
     </div>
 </div>

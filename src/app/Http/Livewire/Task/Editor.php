@@ -9,25 +9,31 @@ class Editor extends Component
 {
     public $project_id;
     public $task_id;
-    
     public $task;
     public $index;
-    public $btn_name;
+    public $method;
 
     protected $rules = [
         'task' => 'string'
     ];
 
-    // Todo: updateとaddの時nameを変更する
-    private function btnName()
-    {
-        $this->btn_name = 'Publish Post';
-    }
-
     public function render()
     {
-        $this->btnName();
-
         return view('livewire.task.editor');
+    }
+
+    public function emitUpTask()
+    {
+        if ($this->method === 'add')
+        {
+            $this->emitUp('storeTask',  $this->project_id, $this->task);
+        }
+
+        if ($this->method === 'update')
+        {
+            $this->emitUp('updateTask', $this->task, $this->project_id, $this->task_id, $this->index);
+        }
+        
+        $this->reset('task');
     }
 }

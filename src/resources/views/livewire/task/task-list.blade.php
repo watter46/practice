@@ -40,11 +40,13 @@
         </div>
     </div>
 
-    {{-- Edit時にタスクの代わりに表示するテキストエリア --}}
-    <livewire:task.update-task :project_id="$project_id"
-                               :task_id="$task_id"
-                               :index="$index"
-                               :wire:key="'update-task-'. $task_id" />
+    {{-- タスク編集の時に表示するエディター --}}
+    <div id="js_editor" class="w-full hidden">
+        <livewire:task.editor :project_id="$project_id"
+                              :task_id="$task_id"
+                              :index="$index"
+                              :method="'update'" />
+    </div>
     
     <script>
         /* ロード時に受け取ったデータから、HTMLエレメントに変換する */

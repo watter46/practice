@@ -30,19 +30,4 @@ class Editor extends Component
 
         return view('livewire.task.editor');
     }
-
-    // public function updatedTask($task)
-    // {
-    //     $this->emitUp('setTask', $task);
-
-    //     // $this->reset('task');
-    // }
-
-    
-    public function emitUpProcess()
-    {
-        $this->emitUp('process', $this->task);
-
-        $this->reset('task');
-    }
 }

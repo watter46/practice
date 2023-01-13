@@ -3,6 +3,7 @@
 export const toggleOperateMenu = () => {
     document.addEventListener("click", (e) => {
 
+        // console.log(e.target)
         const addJsOperateMenu = () => {
             const operate_menu_class = document.querySelectorAll('#js_operate_menu')[index].classList;
             operate_menu_class.add("operate-menu");

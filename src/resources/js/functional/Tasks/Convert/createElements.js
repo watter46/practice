@@ -1,3 +1,18 @@
+/* 表示されるHTML */
+/* 
+<ul id="sortable">
+    <li>
+        <div class="flex items-center">
+            <span class="py-2 px-3 cursor-pointer opacity-0 hover:opacity-100 handle">:::</span>
+            <input type="checkbox" class="mr-2" onchange="updateCheckbox(2)">
+            <div class="w-11/12">
+                <p class="break-words">タスク内容</p>
+            </div>
+        </div>
+    </li>
+</ul>
+*/
+
 const ul_element = () => {
     const ul = document.createElement('ul');
     ul.id = "sortable";

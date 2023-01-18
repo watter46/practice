@@ -6,7 +6,9 @@ const ul_element = () => {
 }
 
 const li_element = () => {
-    return document.createElement('li');
+    const li = document.createElement('li');
+
+    return li;
 }
 
 const handle_element = () => {
@@ -31,13 +33,18 @@ const checkbox_element = (text, index) => {
 }
 
 const task_text_element = (text) => {
+    const div = document.createElement('div');
+    div.classList.add("w-11/12");
     const p = document.createElement('p');
 
     const excepted_command = text.replace(/^....../g, "");
 
     p.textContent = excepted_command;
+    p.classList.add("break-words");
 
-    return p;
+    div.appendChild(p);
+
+    return div;
 }
 
 const newline_element = () => {
@@ -51,7 +58,7 @@ const li_task_element = (text, index) => {
     const task_wrapper  = document.createElement('div');
     task_wrapper.classList.add('flex', 'items-center');
 
-    const li = li_element();
+    const li       = li_element();
     const handle   = handle_element();
     const checkbox = checkbox_element(text, index);
     const text_p   = task_text_element(text);
@@ -72,6 +79,7 @@ const li_task_element = (text, index) => {
 const comment_element = (text) => {
     const p = document.createElement('p');
     p.innerText = text;
+    p.classList.add("break-words");
 
     return p;
 }
@@ -108,7 +116,7 @@ const appendTaskInTaskList = (text, index, taskList_element) => {
 const appendCommentInLi = (text, li_nodes, last_li_index) => {
     const comment = li_comment_element(text);
 
-    const target_li  =  li_nodes[last_li_index];
+    const target_li = li_nodes[last_li_index];
 
     target_li.appendChild(comment);
 }

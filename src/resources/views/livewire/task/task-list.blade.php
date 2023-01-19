@@ -26,7 +26,7 @@
     {{-- tasks --}}
     <div class="p-3 border-b-2 border-gray-600">
         <div id="tasks">
-            <table class="table-auto text-white">
+            <table class="w-full table-fixed text-white">
                 <tbody>
                     <tr>
                         <td id="taskList"
@@ -59,6 +59,9 @@
 
         /* ページ全体を読み込みが完了した時にsortablejsを設定する */
         /* livewire:loadでsetupSortableを設定すると反映されない箇所があるのでonloadで対応した */
-        document.body.onload = () => setupSortable();
+        document.body.onload = () => {
+            setupSortable();
+            resizeTextareaForAddition();
+        }
     </script>
 </div>

@@ -1,7 +1,6 @@
-import { setupSortable } from './setupSortable';
-import { closeEditor }   from '../Editor/closeEditor';
-import { convertToHtml } from '../Convert/convertToHtml';
-
+import { setupSortable }   from './setupSortable';
+import { convertToHtml }   from '../Convert/convertToHtml';
+import { editorForUpdate } from '../Editor/keydownCommand';
 
 export const loadSetting = (event) => {
     const tasks = event.detail.tasks;
@@ -19,4 +18,5 @@ export const loadSetting = (event) => {
     });
 
     setupSortable();
+    editorForUpdate();
 }

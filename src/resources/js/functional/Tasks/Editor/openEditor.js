@@ -1,4 +1,5 @@
 import { convertToString } from '../Convert/convertToString';
+import { resizeTextareaForUpdate }  from './resizeTextarea';
 
 export const openEditor = (index) => {
 
@@ -17,7 +18,7 @@ export const openEditor = (index) => {
 
 
     /* 変換した文字列をテキストエディタの初期値にする */
-    const textarea = document.querySelectorAll('#editor_textarea')[index];
+    const textarea = document.querySelectorAll('#editor_textarea_update')[index];
 
     textarea.value = str_task;
 
@@ -27,4 +28,5 @@ export const openEditor = (index) => {
     
     textarea.focus();
     textarea.setSelectionRange(length, length);
+    resizeTextareaForUpdate();
 }

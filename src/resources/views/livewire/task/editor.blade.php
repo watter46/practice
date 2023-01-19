@@ -4,6 +4,7 @@
         <div class="flex justify-end items-center px-3 border-b dark:border-gray-600">
             <div class="flex flex-wrap items-center divide-gray-200 sm:divide-x dark:divide-gray-600">
                 <div class="flex flex-wrap items-center space-x-1 sm:pl-4">
+                    {{-- 追加予定: バレット追加コマンド --}}
                     {{-- <button type="button"
                             class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600"
                             onclick="todo.addBulleted()">
@@ -12,13 +13,18 @@
                         </svg>
                         <span class="sr-only">Add bulletList</span>
                     </button> --}}
+
+                    {{-- チェックボックス追加コマンド --}}
                     <button type="button"
-                            class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600"
-                            onclick="addTaskCommand(event)">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                            class="parent-checkbox-btn p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600"
+                            project_id="{{ $project_id }}"
+                            index="{{ $index }}"
+                            method="{{ $method }}"
+                            onclick="clickPrependCheckbox(event)">
+
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="parent-checkbox-svg w-6 h-6">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 16.875h3.375m0 0h3.375m-3.375 0V13.5m0 3.375v3.375M6 10.5h2.25a2.25 2.25 0 002.25-2.25V6a2.25 2.25 0 00-2.25-2.25H6A2.25 2.25 0 003.75 6v2.25A2.25 2.25 0 006 10.5zm0 9.75h2.25A2.25 2.25 0 0010.5 18v-2.25a2.25 2.25 0 00-2.25-2.25H6a2.25 2.25 0 00-2.25 2.25V18A2.25 2.25 0 006 20.25zm9.75-9.75H18a2.25 2.25 0 002.25-2.25V6A2.25 2.25 0 0018 3.75h-2.25A2.25 2.25 0 0013.5 6v2.25a2.25 2.25 0 002.25 2.25z" />
                         </svg>
-                        <span class="sr-only">Add list</span>
                     </button>
                 </div>
             </div>
@@ -26,10 +32,34 @@
     </div>
 
     {{-- Textarea --}}
-    <div class="py-2 px-4 rounded-b-lg dark:bg-gray-800">
-        <label for="editor_textarea" class="sr-only">Publish post</label>
-        <textarea id="editor_textarea" name="editor_textarea" wire:model.defer="task" rows="8" class="block px-0 w-full text-sm text-gray-800 bg-white focus:outline-none border-0 dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400" placeholder="Write an article..." required=""></textarea>
-    </div>
+    @if ($method === 'add')
+        <div class="py-2 px-4 rounded-b-lg dark:bg-gray-800">
+            <label for="editor_textarea_{{ $method }}" class="sr-only">Publish post</label>
+            <textarea id="editor_textarea_{{ $method }}"
+                      name="editor_textarea_{{ $method }}"
+                      wire:model.defer="task"
+                      project_id="{{ $project_id }}"
+                      rows="5"
+                      class="block px-0 w-full resize-none text-sm text-gray-800 bg-white focus:outline-none border-0 dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400"
+                      placeholder="Write an article..." required="">
+            </textarea>
+        </div>
+    @endif
+
+    @if ($method === 'update')
+        <div class="py-2 px-4 rounded-b-lg dark:bg-gray-800">
+            <label for="editor_textarea_{{ $method }}" class="sr-only">update</label>
+            <textarea id="editor_textarea_{{ $method }}"
+                      name="editor_textarea_{{ $method }}"
+                      wire:model.defer="task"
+                      project_id="{{ $project_id }}"
+                      task_id="{{ $task_id }}"
+                      index="{{ $index }}"
+                      rows="5"
+                      class="block px-0 w-full resize-none text-sm text-gray-800 bg-white focus:outline-none border-0 dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400" placeholder="Write an article..." required="">
+            </textarea>
+        </div>
+    @endif
 
     <div class="flex justify-end">
         @if ($method === 'add')

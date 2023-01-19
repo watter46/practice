@@ -14,6 +14,7 @@ class Tasks extends Component
 
     protected $listeners = [
         'fetchProject' => 'fetchProject',
+        'jsStoreTask'  => 'jsStoreTask',
         'storeTask'    => 'storeTask',
         'updateTask'   => 'updateTask',
         'deleteTask'   => 'deleteTask',
@@ -31,9 +32,14 @@ class Tasks extends Component
         $this->fetchProject($id);
     }
 
-    private function dispatch()
+    private function loadSetting()
     {
         $this->dispatchBrowserEvent('js_loadSetting', ['tasks' => $this->project['tasks'], 'index' => $this->index]);
+    }
+
+    private function resetTextarea()
+    {
+        $this->dispatchBrowserEvent('js_resetTextarea');
     }
 
     public function fetchProject($id)
@@ -51,7 +57,7 @@ class Tasks extends Component
         ]);
 
         $this->fetchProject($project_id);
-        $this->dispatch();
+        $this->loadSetting();
     }
 
     public function updateTask($modified_task, $project_id, $task_id, $index)
@@ -61,7 +67,7 @@ class Tasks extends Component
         Task::find($task_id)->update(['task' => $modified_task]);
 
         $this->fetchProject($project_id);
-        $this->dispatch();
+        $this->loadSetting();
     }
 
     public function deleteTask($project_id, $task_id, $index)
@@ -71,8 +77,14 @@ class Tasks extends Component
         Task::destroy($task_id);
 
         $this->fetchProject($project_id);
-        $this->dispatch();
-    } 
+        $this->loadSetting();
+    }
+
+    public function jsStoreTask($project, $task)
+    {
+        $this->storeTask($project, $task);
+        $this->resetTextarea();
+    }
 
     public function toNewProject()
     {

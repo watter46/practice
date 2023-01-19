@@ -30,10 +30,10 @@
             <div>
                 @foreach ($project['tasks'] as $index => $tasks)
                     <livewire:task.task-list :project_id="$project['id']"
-                                            :task_id="$tasks['id']"
-                                            :task="$tasks['task']"
-                                            :index="$index"
-                                            :wire:key="now().$tasks['id']">
+                                             :task_id="$tasks['id']"
+                                             :task="$tasks['task']"
+                                             :index="$index"
+                                             :wire:key="now().$tasks['id']">
                 @endforeach
             </div>
 
@@ -41,9 +41,9 @@
 
             {{-- TextEditor --}}
             <div class="mt-3">
-                {{-- <livewire:task.add-task :project_id="$project['id']" /> --}}
-                {{-- テキストエディタ --}}
-                <livewire:task.editor :project_id="$project['id']" :method="'add'" />
+                <livewire:task.editor :project_id="$project['id']"
+                                      :method="'add'"
+                                      :wire:key="'editor-for-addition-'.$project['id']" />
             </div>
         </div>
 
@@ -67,6 +67,7 @@
     <script>
         /* Taskを追加した時にsortablejsを設定する */
         /* livewireはDOMの更新がされた時、blade内のjavascriptが実行されないのでsortablejsの再設定をする */
-        window.addEventListener('js_loadSetting', (event) => loadSetting(event));
+        window.addEventListener('js_loadSetting',   (event) => loadSetting(event));
+        window.addEventListener('js_resetTextarea', ()      => resetTextarea())
     </script>
 </div>

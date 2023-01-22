@@ -1,4 +1,6 @@
-# focus
+# practice
+
+練習用プロジェクト
 
 ## Usage
 
